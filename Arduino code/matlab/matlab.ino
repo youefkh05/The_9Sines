@@ -74,7 +74,7 @@
         //check if it changed due to potentiometre not noise
         volume_input=check_analog_pin(vol,old_volume);
         if (x>=2){ //we need first to calculate everything
-          Serial.println("from volume");
+          //Serial.println("from volume");
           Serial.println(1000L*volume_input+10*chanel);
           x=2;
         }
@@ -96,14 +96,14 @@
         //it means we switch to AM
         chanel=chanel+choffset;
         FM=0;
-        Serial.println("From mode");
+        //Serial.println("From AM mode");
         Serial.println(1000L*volume_input+10*chanel);  
       }
       else if(FMselector==1 && chanel>=choffset){
-        //it means we switch to AM
+        //it means we switch to FM
         chanel=chanel-choffset;
         FM=1;
-        Serial.println("From mode");
+        //Serial.println("From FM mode");
         Serial.println(1000L*volume_input+10*chanel);
       }
       
@@ -136,7 +136,7 @@
         Serial.println(chanel);
         */
         if (x>=2){ //we need first to calculate everything
-          Serial.println("From chanel");
+          //Serial.println("From chanel");
           Serial.println(1000L*volume_input+10*chanel);
           x=2;
         }
@@ -167,7 +167,7 @@
           digitalWrite(led[0],HIGH);
           for(int i=0;i<5;i++){
             //Serial.print("for loop1: "); 
-            Serial.println("From receive");
+            //Serial.println("From receive");
             Serial.println(1000L*volume_input+10*chanel+m[0]);
             delay(400);
           }
@@ -185,7 +185,7 @@
           digitalWrite(led[1],HIGH);
           for(int i=0;i<5;i++){
             //Serial.print("for loop2: ");
-            Serial.println("From filter"); 
+            //Serial.println("From filter"); 
             Serial.println(1000L*volume_input+10*chanel+m[1]);
             delay(400);
             }
@@ -204,7 +204,7 @@
       //Serial.println(pcount);
       if(pcount>=150){
         // print in order to keep moniter full
-        Serial.println("From loop");
+        //Serial.println("From loop");
         Serial.println(1000L*volume_input+10*chanel);
         x=2;
         pcount=0;
@@ -377,7 +377,7 @@ int check_analog_pin(int pin,int reading){
       delay(1500);
     }
     else{ //if it was off 
-      Serial.println("From interrupt");
+      //Serial.println("From interrupt");
       Serial.println(1000L*volume_input+10*chanel);
       //on the leds
       for (int i=0;i<2;i++)
