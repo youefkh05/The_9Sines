@@ -30,7 +30,7 @@
     pinMode(FMswitch, INPUT_PULLUP); // Set as input with internal pull-up resistor
     // Selectors leds
     for (int i=0;i<2;i++)
-    pinMode(led[i],OUTPUT); 
+      pinMode(led[i],OUTPUT); 
 
     // Selectors pins
     for (int i=0;i<2;i++)
