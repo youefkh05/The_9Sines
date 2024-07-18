@@ -23,7 +23,7 @@ function varargout = audio_player(varargin)
 
 % Edit the above text to modify the response to help audio_player
 
-% Last Modified by GUIDE v2.5 29-Jan-2024 23:35:16
+% Last Modified by GUIDE v2.5 18-Jul-2024 19:01:29
 
 % Begin initialization code - DO NOISET EDIT
 gui_Singleton = 1;
@@ -102,7 +102,7 @@ playm=0;
 om=audioplayer(vfact.*oy,rate.*f);
 ey=encrypt_audio(oy,efact);
 em=audioplayer(vfact.*ey,rate.*f);
-[fy]=filter_audio(oy,f,0,fmode);
+[fy,MSE,PSNR]=filter_audio(oy,f,0,fmode);
 fm=audioplayer(vfact.*fy,rate.*f);
 set(handles.oradio,'value',1);
 set(handles.eradio,'value',0);
@@ -125,6 +125,12 @@ set(handles.noise,'visible',"off");
 set(handles.noiseb,'visible',"off");
 set(handles.noiseT,'visible',"off");
 set(handles.fmenu,'visible',"off");
+set(handles.MSEb,'string',MSE);
+set(handles.MSEb,'visible',"off");
+set(handles.MSET,'visible',"off");
+set(handles.PSNRb,'string',PSNR);
+set(handles.PSNRb,'visible',"off");
+set(handles.PSNRT,'visible',"off");
 set(handles.receiverb,'visible',"off");
 set(handles.receiverT,'visible',"off");
 set(handles.returnb,'visible',"off");
@@ -247,6 +253,52 @@ if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgr
     set(hObject,'BackgroundColor','white');
 end
 end
+
+function PSNRb_Callback(hObject, eventdata, handles)
+% hObject    handle to PSNRb (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of PSNRb as text
+%        str2double(get(hObject,'String')) returns contents of PSNRb as a double
+end
+
+% --- Executes during object creation, after setting all properties.
+function PSNRb_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to PSNRb (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+end
+
+
+function MSEb_Callback(hObject, eventdata, handles)
+% hObject    handle to MSEb (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of MSEb as text
+%        str2double(get(hObject,'String')) returns contents of MSEb as a double
+end
+
+% --- Executes during object creation, after setting all properties.
+function MSEb_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to MSEb (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+end
+
 
 function loc_Callback(hObject, eventdata, handles)
 % hObject    handle to loc (see GCBO)
@@ -388,7 +440,9 @@ stop(fm);
 om=audioplayer(vfact.*oy,rate.*f);
 ey=encrypt_audio(oy,efact);
 em=audioplayer(vfact.*ey,rate.*f);
-[fy]=filter_audio(oy,f,0,fmode);
+[fy,MSE,PSNR]=filter_audio(oy,f,0,fmode);
+set(handles.MSEb,'string',MSE);
+set(handles.PSNRb,'string',PSNR);
 fm=audioplayer(vfact.*fy,rate.*f);
 playm=0;
 mpos=om.CurrentSample;
@@ -506,7 +560,11 @@ set(handles.noiseb,'visible',"on");
 set(handles.noise,'visible',"on");
 end
 if m==2
-set(handles.fmenu,'visible',"on");    
+set(handles.fmenu,'visible',"on");
+set(handles.MSEb,'visible',"on");
+set(handles.MSET,'visible',"on");
+set(handles.PSNRb,'visible',"on");
+set(handles.PSNRT,'visible',"on");
 end
 
 end
@@ -592,7 +650,11 @@ set(handles.vol,'visible',"off");
 set(handles.noiseT,'visible',"off");
 set(handles.noiseb,'visible',"off");
 set(handles.noise,'visible',"off");
-set(handles.fmenu,'visible',"off");    
+set(handles.fmenu,'visible',"off");
+set(handles.MSEb,'visible',"off");
+set(handles.MSET,'visible',"off");
+set(handles.PSNRb,'visible',"off");
+set(handles.PSNRT,'visible',"off");
 set(handles.locT,'visible',"off");
 set(handles.loc,'visible',"off");
 set(handles.filenameT,'visible',"off");
@@ -1050,6 +1112,10 @@ if (estate==1)||(fstate==1)  %if it is on it will not do anything
 end
 
 set(handles.fmenu,'visible',"off");
+set(handles.MSEb,'visible',"off");
+set(handles.MSET,'visible',"off");
+set(handles.PSNRb,'visible',"off");
+set(handles.PSNRT,'visible',"off");
 set(handles.noise,'visible',"off");
 set(handles.noiseb,'visible',"off");
 set(handles.noiseT,'visible',"off");
@@ -1097,6 +1163,10 @@ if (ostate==1)||(fstate==1)  %if it is on it will not do anything
 end
 
 set(handles.fmenu,'visible',"off");
+set(handles.MSEb,'visible',"off");
+set(handles.MSET,'visible',"off");
+set(handles.PSNRb,'visible',"off");
+set(handles.PSNRT,'visible',"off");
 set(handles.saveb,'visible',"on");
 set(handles.noise,'visible',"on");
 set(handles.noiseb,'visible',"on");
@@ -1152,6 +1222,10 @@ if (ostate==1)||(estate==1)  %if it is on it will not do anything
 end
 
 set(handles.fmenu,'visible',"on");
+set(handles.MSEb,'visible',"on");
+set(handles.MSET,'visible',"on");
+set(handles.PSNRb,'visible',"on");
+set(handles.PSNRT,'visible',"on");
 set(handles.saveb,'visible',"on");
 set(handles.noise,'visible',"off");
 set(handles.noiseb,'visible',"off");
@@ -1190,7 +1264,9 @@ end
 fmode=get(hObject,'Value');    %filter selection 1=wave, 2=FIR
 %we need to filter the music
 om=audioplayer(vfact.*oy,rate.*f);
-[fy]=filter_audio(oy,f,1,fmode);
+[fy,MSE,PSNR]=filter_audio(oy,f,1,fmode);
+set(handles.MSEb,'string',MSE);
+set(handles.PSNRb,'string',PSNR);
 fm=audioplayer(vfact.*fy,rate.*f);
 play(om,mpos);
 play(fm,mpos);
