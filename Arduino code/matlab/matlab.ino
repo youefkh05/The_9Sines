@@ -1,4 +1,4 @@
-
+//
   const int sound[] = {2,3};        //selectors pin
   const int led[]={12,13};          //selection's led
   const int off=7;                  //off pin
