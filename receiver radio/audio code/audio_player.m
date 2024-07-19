@@ -7,7 +7,7 @@ function varargout = audio_player(varargin)
 %      H = AUDIO_PLAYER returns the handle to a new AUDIO_PLAYER or the handle to
 %      the existing singleton*.
 %
-%      AUDIO_PLAYER('CALLBACK',hObject,eventData,handles,...) calls the local
+%      AUDIOG_PLAYER('CALLBACK',hObject,eventData,handles,...) calls the local
 %      function named CALLBACK in AUDIO_PLAYER.M with the given input arguments.
 %
 %      AUDIO_PLAYER('Property','Value',...) creates a new AUDIO_PLAYER or raises the
