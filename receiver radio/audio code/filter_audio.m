@@ -30,10 +30,10 @@ maxAmplitude = max(abs(oy));
 psnrValue = 10 * log10((maxAmplitude.^2) / mseValue);
 
 % Display the results
-fprintf('MSE: %f\n', mseValue(2));
+fprintf('MSE: %f\n', mseValue(1));
 fprintf('PSNR: %f dB\n', psnrValue);
 
-MSE=mseValue(2);
+MSE=mseValue(1);
 PSNR=psnrValue;
 
 end
