@@ -11,7 +11,7 @@ if size(audioData, 2) == 2
 end
 
 % Parameters
-noiseLevel = 0.01g; % Adjust this value to set the noise level
+noiseLevel = 0.01; % Adjust this value to set the noise level
 
 % Generate different types of noise
 whiteNoise = noiseLevel * randn(size(audioData));

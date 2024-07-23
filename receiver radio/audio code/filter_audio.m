@@ -23,23 +23,20 @@ noisePower = mean(noiseSignal.^2);
 SNR = 10 * log10(cleanPower / noisePower);
 
 % Calculate MSE (Mean Squared Error)
-mseValue = sum((oy - fy).^2) / length(oy);
+error=oy-fy;
+MSE=mean(error.^2,'all');
 
 % Calculate PSNR (Peak Signal-to-Noise Ratio)
 maxAmplitude = max(abs(oy));
-psnrValue = 10 * log10((maxAmplitude.^2) / mseValue);
+PSNR = 10 * log10((maxAmplitude.^2) / MSE);
 
 % Display the results
-fprintf('MSE: %f\n', mseValue(1));
-fprintf('PSNR: %f dB\n', psnrValue);
+fprintf('MSE: %f\n', MSE);
+fprintf('PSNR: %f dB\n', PSNR);
 
-MSE=mseValue(1);
-PSNR=psnrValue;
 
 end
 
-
-%fprintf('Signal-to-Noise Ratio (SNR): %.2f dB\n',SNR);
 
 
 
