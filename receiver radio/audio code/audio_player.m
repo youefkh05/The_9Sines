@@ -737,8 +737,8 @@ old_ch=0;
 if dstate==1
     dread=0;
     delete(instrfind);
-    %arduino=serial('COM10','BaudRate',9600,'DataBits',8);
-    %fopen(arduino);
+    arduino=serial('COM10','BaudRate',9600,'DataBits',8);
+    fopen(arduino);
     set(handles.receiverb,'string',"On standby");
     vol_in=513; %default value
     while dread==0
@@ -806,9 +806,8 @@ if dstate==1
         
         while rem(mes,10)~=1 && rem(mes,10)~=2 && dread==0
         pause(0.01);
-        %mes=fscanf(arduino);
-        %mes=floor(str2double(mes))
-        mes=mes;
+        mes=fscanf(arduino);
+        mes=floor(str2double(mes))
         
         if rem(mes,1000)==0 %off mode
             mr=0;

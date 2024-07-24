@@ -6,10 +6,10 @@ function [denoised_audio] = wavelet_filter(original_audio, showgraph)
     %}
 
     % Parameters
-    wavelet_name = 'db4';  % Choose a wavelet (e.g., 'db4')
-    level = 9;            % Decomposition level
-    threshold_type = 's';  % Soft thresholding ('s') or hard thresholding ('h')
-    threshold_value = 0.101; % Adjust this threshold value based on your signal
+    wavelet_name = 'coif4';  % Choose a wavelet (e.g., 'db4')
+    level = 8;            % Decomposition level
+    threshold_type = 'h';  % Soft thresholding ('s') or hard thresholding ('h')
+    threshold_value = 0.07; % Adjust this threshold value based on your signal
 
     % Perform wavelet decomposition
     [c, l] = wavedec(original_audio, level, wavelet_name);

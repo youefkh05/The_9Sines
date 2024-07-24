@@ -1,7 +1,7 @@
 function [denoised_audio] = IIR_filter(original_audio,f, showgraph)
 %IIR_FILTER Summary of this function goes here
 %filterOrder = input("Enter a filter order : "); % Filter order
- filterOrder=1;
+ filterOrder=2;
  %cutoffFrequency = input("Enter a cut-off frequency  : "); % Cutoff frequency in Hz
  cutoffFrequency=1500;
  %Filter_Design = input("Enter the needed filter design  : ", 's');%Choose ['butterworth', 'chebyshev1', 'chebyshev2' & 'elliptic']
