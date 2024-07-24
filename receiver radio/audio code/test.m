@@ -1,99 +1,45 @@
 clear;
 clc;
-global mc1      %chanel 1
-global yr1      %y chanel 1
-global mc2      %chanel 2
-global yr2      %y chanel 2
-global mc3      %chanel 3
-global yr3      %y chanel 3
-global mc4      %chanel 4
-global yr4      %y chanel 4
-global mn       %chanel noise
-global yn       %y chanel noise
-[yr2,fr]=audioread("saved audio\chanel\ch2normal.wav");
-mc2=audioplayer(yr2,fr);
-[yr3,fr]=audioread("saved audio\chanel\ch3DJ.wav");
-mc3=audioplayer(yr3,fr);
-[yr4,fr]=audioread("saved audio\chanel\ch4recorded.wav");
-mc4=audioplayer(yr4,fr);
-[yn,fr]=audioread("saved audio\chanel\noise.wav");
-mn=audioplayer(yn,fr);
-[yr1,fr]=audioread("saved audio\chanel\ch1palestine.wav");
-mc1=audioplayer(yr1,fr);     
-omr=mc1;            %the default is chanel 1
+[file,path]=uigetfile('*.*');
+mp=strcat(path,file);
+% Step 1: Read the MP3 file
+[audioData, sampleRate] = audioread(mp);
 
-mrpos=omr.CurrentSample;
-play(omr,mrpos);
-pause(5);
-[mrpos,yr,fr]=change_chanel(2,1,omr);
-omr=audioplayer(yr,fr); 
-play(omr,mrpos);
-pause(5);
-[mrpos,yr,fr]=change_chanel(3,2,omr);
-omr=audioplayer(yr,fr); 
-play(omr,mrpos);
-pause(5);
-[mrpos,yr,fr]=change_chanel(1,3,omr);
-omr=audioplayer(yr,fr); 
-play(omr,mrpos);
-pause(5);
-[mrpos,yr,fr]=change_chanel(2,1,omr);
-omr=audioplayer(yr,fr); 
-play(omr,mrpos);
-pause(5);
-pause(omr);
+% Convert to mono if stereo
+if size(audioData, 2) == 2
+    audioData = mean(audioData, 2);
+end
 
-    function [pos,ynew,fnew] = change_chanel(ch,old_ch,old_m)
-    global mc1      %chanel 1
-    global yr1      %y chanel 1
-    global mc2      %chanel 2
-    global yr2      %y chanel 2
-    global mc3      %chanel 3
-    global yr3      %y chanel 3
-    global mc4      %chanel 4
-    global yr4      %y chanel 4
-    global mn       %chanel noise
-    global yn       %y chanel noise
-    pause(old_m);
-    old_pos=old_m.CurrentSample;    %save the current position
-    if old_ch==2
-        play(mc2,old_pos);
-        pause(0.05);
-        pause(mc2);
-    elseif old_ch==3
-        play(mc3,old_pos);
-        pause(0.05);
-        pause(mc3);
-    elseif old_ch==4
-        play(mc4,old_pos);
-        pause(0.05);
-        pause(mc4);
-    else
-        play(mn,old_pos);
-        pause(0.05);
-        pause(mn);
-    end
+% Step 2: Compute the FFT
+N = length(audioData);
+frequencies = (0:N-1)*(sampleRate/N);
+audioFFT = fft(audioData);
 
-  if ch==1
-    ynew=yr1;
-    fnew=mc1.SampleRate;
-    pos=mc1.CurrentSample;
-  elseif ch==2
-    ynew=yr2;
-    fnew=mc2.SampleRate;
-    pos=mc2.CurrentSample;
-  elseif ch==3
-    ynew=yr3;
-    fnew=mc3.SampleRate;
-    pos=mc3.CurrentSample;
-  elseif ch==4
-    ynew=yr4;
-    fnew=mc4.SampleRate;
-    pos=mc4.CurrentSample;
-  else
-    ynew=yn;
-    fnew=mn.SampleRate;
-    pos=mn.CurrentSample;
-  end
-   
-   end
+% Compute the magnitude of the FFT
+magnitude = abs(audioFFT)/N;
+
+% Step 3: Plot the Frequency Spectrum
+figure;
+plot(frequencies, magnitude);
+xlim([0, sampleRate/2]); % We only need to plot up to the Nyquist frequency
+title('Frequency Spectrum');
+xlabel('Frequency (Hz)');
+ylabel('Magnitude');
+
+% Step 3: Find the top 3 frequencies
+[sortedMagnitude, sortedIndices] = sort(magnitude, 'descend');
+top3Indices = sortedIndices(1:3);
+top3Frequencies = frequencies(top3Indices);
+top3Magnitudes = sortedMagnitude(1:3);
+
+% Display the top 3 frequencies and their magnitudes
+disp('Top 3 Frequencies and their Magnitudes:');
+for i = 1:3
+    fprintf('Frequency: %.2f Hz, Magnitude: %.2f\n', top3Frequencies(i), top3Magnitudes(i));
+end
+
+
+music=audioplayer(audioData,sampleRate);
+play(music);
+pause(5);
+stop(music);
