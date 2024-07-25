@@ -1,4 +1,4 @@
-//
+
   const int sound[] = {2,3};        //selectors pin
   const int led[]={12,13};          //selection's led
   const int off=7;                  //off pin
@@ -30,7 +30,7 @@
     pinMode(FMswitch, INPUT_PULLUP); // Set as input with internal pull-up resistor
     // Selectors leds
     for (int i=0;i<2;i++)
-      pinMode(led[i],OUTPUT); 
+    pinMode(led[i],OUTPUT); 
 
     // Selectors pins
     for (int i=0;i<2;i++)
@@ -74,6 +74,7 @@
         //check if it changed due to potentiometre not noise
         volume_input=check_analog_pin(vol,old_volume);
         if (x>=2){ //we need first to calculate everything
+          volume_input=check_input_spark(volume_input);
           //Serial.println("from volume");
           Serial.println(1000L*volume_input+10*chanel);
           x=2;
@@ -116,11 +117,12 @@
       Serial.print("input: ");
       Serial.println(ch_selector_input);
       */
-      if((ch_selector_input>=old_chanel_input+15 ||ch_selector_input<=old_chanel_input-15) && digitalRead(sound[0])==0 && digitalRead(sound[1])==0){ 
+      if((ch_selector_input>=old_chanel_input+15 ||ch_selector_input<=old_chanel_input-15)  && digitalRead(sound[0])==0 && digitalRead(sound[1])==0){ 
         //check if it changed due to potentiometre not noise
         /*int x=old_chanel_input;
         int y=chanel;
         */
+        volume_input=check_input_spark(volume_input);
         ch_selector_input=check_analog_pin(ch_selector,old_chanel_input);
         chanel=check_chanel(ch_selector_input);
         if (FM==0) //AM
@@ -240,20 +242,62 @@
       seq=seq+1; 
       reading=digitalRead(pin);
       delay(30);
-      /*Serial.print("reading=");
+      /*
+      Serial.print("reading=");
       Serial.print(reading);
       Serial.print(" seq=");
-      Serial.println(seq);*/
+      Serial.println(seq);
+      */
       }
                  
-   if(6<seq&&seq<=50){
+   if(6<seq&&seq<=40){
       return 1;
       }
    return 0;
   }
 
+int check_pin_spark(int pin,int reading){
+  int lowcount=0;
+  int highcount=0;
+  //to avoid sparks
+  for(int i=0;i<6;i++){
+    int readpin=analogRead(pin);
+    if(readpin<=10){ //low spark
+        lowcount++;
+        if(reading>=100 && lowcount>=3)// it's a spark
+          return 1;
+    }
+    else if(readpin>=1000){ //high spark
+        highcount++;
+        if(reading<=900 && highcount>=3)
+          return 1;
+    } 
+    delay(70);
+  }
+  return 0;
+}
+
+int check_input_spark(int input){
+  static int inputcounter=0;
+  static int oldinput=0;
+  /*
+  Serial.println("Old Input:");
+  Serial.println(oldinput);
+  Serial.println("Input:");
+  Serial.println(input);
+  */
+  inputcounter++;
+  if(inputcounter!=1){
+      if((input<=10 && oldinput>=120) || (input>=1020 && oldinput<=950))
+        return oldinput;
+  }
+  oldinput=input;
+  return input;
+}
+
   //to avoid analog noise
 int check_analog_pin(int pin,int reading){
+
   while(1){ // want be out until stabilized
   int counter=1;
   int readinga[23];
@@ -274,6 +318,7 @@ int check_analog_pin(int pin,int reading){
       Serial.println(readinga[counter]);
       Serial.println(readinga[counter-1]);
       */
+      
       diff[counter-1]=abs(readinga[counter]-readinga[counter-1]);
       delay(100);
   }
@@ -300,8 +345,10 @@ int check_analog_pin(int pin,int reading){
       
   while(counter<23){
     readinga[counter]=analogRead(pin);
-    //Serial.print("readinga: ");
-    //Serial.println(readinga[counter]);
+    /*
+    Serial.print("readinga: ");
+    Serial.println(readinga[counter]);
+    */
     if(i==3){
       for(i=0;i<3;i++)
         diff[i]=abs(readinga[counter-3+i]-readinga[counter-4+i]);
