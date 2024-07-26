@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration file="D:\project\The 9 sins\receiver radio\The_9_Sines_audio_denoisng.prj" location="D:\project\The 9 sins\receiver radio" name="The_9_Sines_audio_denoisng" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration file="D:\project\The 9 sins\final\The_9Sines\receiver radio\The_9_Sines_audio_denoisng.prj" location="D:\project\The 9 sins\final\The_9Sines\receiver radio" name="The_9_Sines_audio_denoisng" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>The_9_Sines_audio_denoisng</param.appname>
     <param.icon>${PROJECT_ROOT}\The_9_Sines_audio_denoisng_resources\icon.ico</param.icon>
     <param.icons>
@@ -9,14 +9,15 @@
       <file>${PROJECT_ROOT}\The_9_Sines_audio_denoisng_resources\icon_16.png</file>
     </param.icons>
     <param.version>1.0</param.version>
-    <param.authnamewatermark />
-    <param.email />
-    <param.company />
-    <param.summary />
-    <param.description />
+    <param.authnamewatermark>Yousef Khaled Omar</param.authnamewatermark>
+    <param.email>youefkh05@gmail.com</param.email>
+    <param.company>The 9 Sines</param.company>
+    <param.summary>The audio denoising application with both software and hardware</param.summary>
+    <param.description>software: you can adjust the audio file with these features: 1.its volume 2.speed 3.encryption 4
+.filteration and then save it if needed							Hardware: an arduino based radio simulator that have 8 chanels 4 AM and 4 FM</param.description>
     <param.screenshot>${PROJECT_ROOT}\audio code\The_9_Sines_audio_denoisng_resources\audioLogo.png</param.screenshot>
     <param.guid />
-    <param.installpath.string>\The_9_Sines_audio_denoisng\</param.installpath.string>
+    <param.installpath.string>\The 9 Sines\The_9_Sines_audio_denoisng\</param.installpath.string>
     <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
     <param.logo />
     <param.install.notes />
@@ -24,7 +25,7 @@
     <param.intermediate>${PROJECT_ROOT}\The_9_Sines_audio_denoisng\for_testing</param.intermediate>
     <param.files.only>${PROJECT_ROOT}\The_9_Sines_audio_denoisng\for_redistribution_files_only</param.files.only>
     <param.output>${PROJECT_ROOT}\The_9_Sines_audio_denoisng\for_redistribution</param.output>
-    <param.logdir>${PROJECT_ROOT}\The_9_Sines_audio_denoisng</param.logdir>
+    <param.logdir>${PROJECT_ROOT}</param.logdir>
     <param.enable.clean.build>false</param.enable.clean.build>
     <param.user.defined.mcr.options />
     <param.target.type>subtarget.standalone</param.target.type>
@@ -46,14 +47,12 @@
 	 audio_player varargin 
  Input Arguments 
 	 -?  print help on how to use the application 
-	 varargin  input arguments</param.help.text>
+	 varargin  input arguments 
+ Description 
+ 	 software: you can adjust the audio file with these features: 1.its volume 2.speed 3.encryption 4
+.filteration and then save it if needed							Hardware: an arduino based radio simulator that have 8 chanels 4 AM and 4 FM</param.help.text>
     <unset>
       <param.version />
-      <param.authnamewatermark />
-      <param.email />
-      <param.company />
-      <param.summary />
-      <param.description />
       <param.guid />
       <param.installpath.string />
       <param.installpath.combo />
@@ -63,7 +62,6 @@
       <param.intermediate />
       <param.files.only />
       <param.output />
-      <param.logdir />
       <param.enable.clean.build />
       <param.user.defined.mcr.options />
       <param.target.type />
@@ -85,6 +83,7 @@
       <file>${PROJECT_ROOT}\audio code\audio_player.m</file>
     </fileset.main>
     <fileset.resources>
+      <file>${PROJECT_ROOT}\audio code\add_noise.m</file>
       <file>${PROJECT_ROOT}\audio code\audio_player.fig</file>
       <file>${PROJECT_ROOT}\audio code\audio_player.m</file>
       <file>${PROJECT_ROOT}\audio code\encrypt_audio.m</file>
@@ -99,9 +98,9 @@
     <fileset.package />
     <fileset.depfun />
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\The_9_Sines_audio_denoisng\for_testing" name="readme.txt" optional="true">D:\project\The 9 sins\receiver radio\The_9_Sines_audio_denoisng\for_testing\readme.txt</file>
-      <file location="${PROJECT_ROOT}\The_9_Sines_audio_denoisng\for_testing" name="splash.png" optional="false">D:\project\The 9 sins\receiver radio\The_9_Sines_audio_denoisng\for_testing\splash.png</file>
-      <file location="${PROJECT_ROOT}\The_9_Sines_audio_denoisng\for_testing" name="The_9_Sines_audio_denoisng.exe" optional="false">D:\project\The 9 sins\receiver radio\The_9_Sines_audio_denoisng\for_testing\The_9_Sines_audio_denoisng.exe</file>
+      <file location="${PROJECT_ROOT}\The_9_Sines_audio_denoisng\for_testing" name="readme.txt" optional="true">D:\project\The 9 sins\final\The_9Sines\receiver radio\The_9_Sines_audio_denoisng\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\The_9_Sines_audio_denoisng\for_testing" name="splash.png" optional="false">D:\project\The 9 sins\final\The_9Sines\receiver radio\The_9_Sines_audio_denoisng\for_testing\splash.png</file>
+      <file location="${PROJECT_ROOT}\The_9_Sines_audio_denoisng\for_testing" name="The_9_Sines_audio_denoisng.exe" optional="false">D:\project\The 9 sins\final\The_9Sines\receiver radio\The_9_Sines_audio_denoisng\for_testing\The_9_Sines_audio_denoisng.exe</file>
     </build-deliverables>
     <workflow />
     <matlab>
@@ -112,8 +111,8 @@
         <toolbox name="gpucoder" />
         <toolbox name="fixedpoint" />
         <toolbox name="matlabhdlcoder" />
-        <toolbox name="neuralnetwork" />
         <toolbox name="polyspacebugfinder" />
+        <toolbox name="neuralnetwork" />
       </toolboxes>
       <toolbox>
         <matlabcoder>
@@ -141,14 +140,14 @@
         </matlabhdlcoder>
       </toolbox>
       <toolbox>
-        <neuralnetwork>
-          <enabled>true</enabled>
-        </neuralnetwork>
-      </toolbox>
-      <toolbox>
         <polyspacebugfinder>
           <enabled>true</enabled>
         </polyspacebugfinder>
+      </toolbox>
+      <toolbox>
+        <neuralnetwork>
+          <enabled>true</enabled>
+        </neuralnetwork>
       </toolbox>
     </matlab>
     <platform>

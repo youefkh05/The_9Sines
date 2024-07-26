@@ -9,11 +9,16 @@ elseif mode==3
     [fy]=IIR_filter(oy,f,show);
 end
 global orignaly
-test=1;
+test=0;
 orignaly=oy;
 % Convert to mono if stereo
 if size(oy, 2) == 2
 	orignaly = mean(oy, 2);
+end
+if size(fy, 2) == 2
+    filteredy = mean(fy, 2);
+else
+    filteredy=fy; 
 end
 %-----------------------Experiment parameters(SNR, PSNR, MSE)--------------------------------------
 global file
@@ -44,11 +49,6 @@ if test==1
     % Convert to mono if stereo
     if size(orignaly, 2) == 2
         orignaly = mean(orignaly, 2);
-    end
-    if size(fy, 2) == 2
-        filteredy = mean(fy, 2);
-    else
-        filteredy=fy; 
     end
 end
 
